@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chatbot {
+  overflow: hidden;
+  background-color: #31384A;
+  box-shadow: 10px 20px 40px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 500px;
+  z-index: 9999;
+  overflow: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(100%);
+  border-radius: 15px;
+}
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 100px;
+}
+
+.messages-wrapper {
+  background-image: linear-gradient(to top, #4b0453, #1D0235);
+  padding: 15px;
+  height: 500px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.message {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 80%;
+  text-align: start;
+  word-wrap: break-word;
+  align-items: center;
+}
+
+.user {
+  background-color: #e0e0e0;
+  color: #680467;
+  align-self: flex-end;
+}
+
+.bot {
+  color: #fff;
+  background-color: #680467;
+}
+.user .icon,
+.bot .icon {
+  margin-right: 10px;
+}
+.input-wrapper {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: #4b0453;
+}
+
+.input-wrapper input {
+  flex: 1;
+  padding: 12px 15px;
+  margin-right: 20px;
+  border-radius: 20px;
+  border: 1px solid #1D0235;
+  color: #e0e0e0;
+  background-color: #1D0235;
+  outline: none;
+}
+
+.input-wrapper button {
+  padding: 12px 20px;
+  border-radius: 20px;
+  background-color: #1D0235;
+  color: #e0e0e0;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-wrapper button:hover {
+  background-color: #680467;
+}
+
+.bot-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #680467;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 10000;
+  transition: transform 1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chatbot.opened {
+  transform: translateY(-15%);
+  opacity: 1;
+}
+
+.bot-button.opened {
+  transform: translateY(-10%);
+}
