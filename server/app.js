@@ -1,13 +1,12 @@
-var createError = require('http-errors');
 var cors = require('cors')
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
 var indexRouter = require('./routes/index');
 var chatbotRouter = require('./routes/chatbot');
+const rateLimiter = require('./middlewares/rateLimiter');
 
 var app = express();
 app.use(cors())
@@ -21,13 +20,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/chatbot', chatbotRouter);
+const { enforceQuotas, reset} = rateLimiter();
+// Apply middleware to all routes
+app.use(enforceQuotas);
+// Reset counters every hour
+reset()
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// test route
+app.use('/', indexRouter);
+// chatbot and elasticsearch route
+app.use('/chatbot', chatbotRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
