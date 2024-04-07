@@ -1,10 +1,8 @@
-import axios from 'axios'
 import React, { useState, useRef, useEffect } from 'react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import './Chatbot.css';
 import { sendPrompt } from '../../api/chatbot';
-
-const HTTP_ENDPOINT = "http:/localhost:3000/";
+import Error from '../Error/Error';
 
 const Chatbot = ({ isOpen }) => {
   const [messages, setMessages] = useState([{
@@ -13,14 +11,13 @@ const Chatbot = ({ isOpen }) => {
   }]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const messagesEndRef = useRef(null);
-
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -45,7 +42,9 @@ const Chatbot = ({ isOpen }) => {
         setMessages([...messages, { text: inputValue, sender: 'user' }, { text: resData, sender: 'bot' }]);
 
       } catch (error) {
-        console.error("Failed to fetch response. Please try again.", error);
+        setError(error?.message || error);
+        setTimeout(() => setError(''), 8000); //auto clear after 5 sec
+        setIsLoading(false);
       }
 
       setInputValue('');
@@ -69,6 +68,7 @@ const Chatbot = ({ isOpen }) => {
           )}
           <div ref={messagesEndRef}></div>
         </div>
+        {error != '' && <Error message={error} />}
         <div className="input-wrapper">
           {isLoading ?
             <div className='loader'>

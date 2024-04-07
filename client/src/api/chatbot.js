@@ -1,16 +1,20 @@
 import axios from 'axios';
+import { getErrorMessage } from '../utilities/errorMessage';
 
 export async function sendPrompt(prompt) {
     try {
-        const response = await axios.post('http://localhost:3000/chatbot', { prompt });
-        console.log('response', response)
-        const { status, message } = response;
-        if (status && status >= 400 && status < 599) {
-            throw new Error('Error:', message)
+        const response = await axios.post('http://localhost:3000/chatbots', { prompt });
+        const { data } = response;
+
+        if (getErrorMessage(response)) {
+            throw new Error(getErrorMessage(response));
         }
-        return response.data;
+        return data;
     } catch (error) {
-        throw new Error('Error while sending the Prompt to server:', error)
+        if (getErrorMessage(error.response)) {
+            throw getErrorMessage(error.response)
+        }
+        throw error.message
     }
 }
 
