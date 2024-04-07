@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './Chatbot.css';
 import axios from 'axios'
+import React, { useState, useRef, useEffect } from 'react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
-import reactImg from './../../assets/react.svg';
+import './Chatbot.css';
 
 const HTTP_ENDPOINT = "http:/localhost:3000/";
 
@@ -12,9 +11,9 @@ const Chatbot = ({ isOpen }) => {
     sender: 'bot'
   }]);
   const [inputValue, setInputValue] = useState('');
-  const messagesEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef(null);
 
   async function sendPrompt(prompt) {
     try {
@@ -24,7 +23,6 @@ const Chatbot = ({ isOpen }) => {
     } catch (error) {
       console.error('frontened error', error)
     }
-
   }
 
   useEffect(() => {
@@ -42,21 +40,16 @@ const Chatbot = ({ isOpen }) => {
 
   const handleSendMessage = async () => {
     if (inputValue.trim() !== '') {
-      // setMessages([...messages, { text: inputValue, sender: 'user' }]);
 
       try {
         console.log('inputValue', inputValue)
         setMessages([...messages, { text: inputValue, sender: 'user' }]);
-        // after some time response from the server
+
         setIsLoading(true)
         const resData = await sendPrompt(inputValue);
+        // after some time elapsed in getting response from the server, remove loader
         setIsLoading(false)
-        // setTimeout(() => {
-
-        // }, 5000)
-        console.log('resData', resData)
-        console.log('messages befpore', messages)
-
+        // console.log('resData', resData)
         setMessages([...messages, { text: inputValue, sender: 'user' }, { text: resData, sender: 'bot' }]);
 
       } catch (error) {
@@ -67,23 +60,20 @@ const Chatbot = ({ isOpen }) => {
     }
   };
 
-  // console.log('messages', messages)
   return (
     <>
-      <div className={`chatbot ${isOpen ? 'opened' : ''}`}>
+      <div className={`chatbot-window ${isOpen ? 'opened' : ''}`}>
         <div className="messages-wrapper">
           {messages.map((message, index) => {
-            // console.log('message', message)
             return (
               <>
-                {message.sender === 'bot' ? <img src='https://assets-global.website-files.com/65e19b51fe32177a4c37ba56/65eb228dc4334c00f6d0a836_hero%20robot.webp' width={40} height={50}/>: <></>}
+                {message.sender === 'bot' ? <img src='https://assets-global.website-files.com/65e19b51fe32177a4c37ba56/65eb228dc4334c00f6d0a836_hero%20robot.webp' width={40} height={50} /> : <></>}
                 <div key={index} className={`message ${message.sender}`}>
-                {message.text}
-              </div>
+                  {message.text}
+                </div>
               </>
             )
           }
-
           )}
           <div ref={messagesEndRef}></div>
         </div>
@@ -104,16 +94,25 @@ const Chatbot = ({ isOpen }) => {
                 onChange={handleInputChange}
                 placeholder="Type a question..."
               />
-              <button onClick={handleSendMessage}>Ask</button>
+              <button onClick={handleSendMessage}>
+                <svg
+                  class="send-button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+              >
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+              </button>
             </>}
-
-
         </div>
       </div>
-      {/* </div> */}
-
     </>
-
   );
 };
 
