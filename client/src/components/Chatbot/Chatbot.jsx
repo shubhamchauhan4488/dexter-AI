@@ -2,12 +2,13 @@ import axios from 'axios'
 import React, { useState, useRef, useEffect } from 'react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import './Chatbot.css';
+import { sendPrompt } from '../../api/chatbot';
 
 const HTTP_ENDPOINT = "http:/localhost:3000/";
 
 const Chatbot = ({ isOpen }) => {
   const [messages, setMessages] = useState([{
-    text: `Hello! 👋 Welcome to our chatbot. I'm here to help you with any questions you have. Don't hesitate to ask!`,
+    text: `Hello! 👋 Welcome to the AI chatbot. I'm here to help you with any questions you have. Don't hesitate to ask!`,
     sender: 'bot'
   }]);
   const [inputValue, setInputValue] = useState('');
@@ -15,15 +16,6 @@ const Chatbot = ({ isOpen }) => {
 
   const messagesEndRef = useRef(null);
 
-  async function sendPrompt(prompt) {
-    try {
-      const response = await axios.post('http://localhost:3000/chatbot', { prompt });
-      console.log('response', response)
-      return response.data;
-    } catch (error) {
-      console.error('frontened error', error)
-    }
-  }
 
   useEffect(() => {
     scrollToBottom();
@@ -96,14 +88,14 @@ const Chatbot = ({ isOpen }) => {
               />
               <button onClick={handleSendMessage}>
                 <svg
-                  class="send-button"
+                  className="send-button"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
               >
                 <line x1="22" y1="2" x2="11" y2="13" />
                 <polygon points="22 2 15 22 11 13 2 9 22 2" />

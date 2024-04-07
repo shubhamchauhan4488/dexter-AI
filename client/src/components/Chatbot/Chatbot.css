@@ -7,6 +7,8 @@
 
 .chatbot-window {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background-color: #31384A;
   box-shadow: 5px 2px 20px rgba(71, 0, 138, 0.9);
   position: fixed;
@@ -23,12 +25,27 @@
 }
 
 .chatbot-window.opened {
-  transition: width 0.5s ease, height 0.5s ease;
-  ;
-  width: 500px;
+  min-width: 35%;
+  max-width: 500px;
   height: 600px;
+  margin-left: 40px;
+  transition: width 0.5s ease, height 0.5s ease;
   transform: translateY(-15%);
   opacity: 1;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .chatbot-window.opened {
+    margin-top: 10px;
+    bottom: 10px;
+    height: 400px;
+    right: 40px;
+    transition: width 0.5s ease, height 0.5s ease;
+    min-width: 80%;
+    transform: translateY(-15%);
+    opacity: 1;
+  }
 }
 
 .loader {
