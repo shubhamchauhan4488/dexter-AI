@@ -1,21 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
-import axios from 'axios';
-import Chatbot from './components/Chatbot';
+import '@dotlottie/react-player/dist/index.css';
+import Home from './components/Home/Home';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  const handleClick = async () => {
-    const response = await axios.get('http://localhost:3000/users')
-    console.log('response', response)
-  }
-
   return (
     <>
-      <Chatbot />
+      <Home />
     </>
   )
 }

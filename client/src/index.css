@@ -10,6 +10,7 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -24,7 +25,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -56,8 +56,8 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    background-color: #1D0235;
+    background-image: linear-gradient(to left, #000, #1D0235);
   }
   a:hover {
     color: #747bff;

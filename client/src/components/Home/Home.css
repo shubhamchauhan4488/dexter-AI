@@ -1,0 +1,23 @@
+.lottie-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 60%;
+}
+
+.bot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #680467;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 10000;
+    transition: transform 0.3s ease;
+    box-shadow: 5px 2px 20px rgba(71, 0, 138, 0.9);
+}
