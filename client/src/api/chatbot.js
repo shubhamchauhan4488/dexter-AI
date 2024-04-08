@@ -3,7 +3,7 @@ import { getErrorMessage } from '../utilities/errorMessage';
 
 export async function sendPrompt(prompt) {
     try {
-        const response = await axios.post('http://localhost:3000/chatbots', { prompt });
+        const response = await axios.post('http://localhost:3000/chatbot', { prompt });
         const { data } = response;
 
         if (getErrorMessage(response)) {
