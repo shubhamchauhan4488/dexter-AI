@@ -65,6 +65,7 @@ Next, To create your OpenAI key do the following:
 npm start
 ```
 You should see the server running, with 'nodemon' watching 👁️
+
 ![server runnning](screenshots/image-5.png)
 
 5. Once you have successfully placed the key values in the `.env`, that's it, now start asking questions to `Dexter` and how dextrous is it! 🧠
@@ -111,28 +112,34 @@ npm start
 ## Features
 ### Rate limiting
 This chatbot rate-limits, does not allow more than 3RPM(requests per minute).
+
 ![rate limiting](screenshots/image-7.png)
 
 ### Loader
-It disables further hitting the apis, if the bot is fetching the answer
+It disables further hitting the apis, if the bot is fetching the answer.
+
 ![loader](screenshots/image-6.png)
 
 ### Error Handling
 Gracefully handles the api errors. Below, it handles a `500 internal server` error.
+
 ![alt text](screenshots/image-16.png) 
 
 
 ### BOT with attitude
 Since it uses openAI under the hood, it has an 'attitude'.
-![attitude example 1](<i dont belive you.png>)
-![attitude example 2](<what is wrong with you.png>)
+
+![attitude example 1](screenshots/attitude1.png>)
+![attitude example 2](screenshots/attitude2.png>)
 
 ### responsive UI design
 Chat-bot is:
  - in `closed` state in mobiles `onLoad`
+
 ![closed state in mobiles](screenshots/image-11.png)
 
  - in `open` state in tabs and laptops `onLoad`
+
  ![open state in laptops/tabs](screenshots/image-9.png)
 
 ## Responsiveness on devices:
