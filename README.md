@@ -129,8 +129,8 @@ Gracefully handles the api errors. Below, it handles a `500 internal server` err
 ### BOT with attitude
 Since it uses openAI under the hood, it has an 'attitude'.
 
-![attitude example 1](screenshots/attitude1.png>)
-![attitude example 2](screenshots/attitude2.png>)
+![attitude example 1](screenshots/attitude1.png)
+![attitude example 2](screenshots/attitude2.png)
 
 ### responsive UI design
 Chat-bot is:
