@@ -4,19 +4,18 @@ var OpenAI = require('openai');
 const { Client } = require('@elastic/elasticsearch');
 
 const client = new Client({
-    node: 'https://5cf64011fb144303be27b23c78b0e8b8.us-central1.gcp.cloud.es.io:443',
+    node: process.env.GCP_ELASTICSEARCH_ENDPOINT,
     cloud: {
-        id: 'GCP_ELASTIC_CLOUD_ID'
+        id: process.env.GCP_ELASTIC_CLOUD_ID,
     },
     auth: {
-        apiKey: 'ELASTIC_AI_KEY'
+        apiKey: process.env.GCP_ELASTIC_CLOUD_AUTH_KEY
     }
 });
 
 const openai = new OpenAI({
-    apiKey: "OPENAI_KEY",
+    apiKey: process.env.OPENAI_API_KEY,
 });
-
 
 router.post('/', async function (req, res) {
     const { prompt: userPrompt } = req.body;
@@ -62,7 +61,6 @@ router.post('/', async function (req, res) {
                     answer: openAIresponseObj.answer
                 }
             })
-
             res.status(200).send(openAIresponseObj.answer)
         }
     } catch (error) {

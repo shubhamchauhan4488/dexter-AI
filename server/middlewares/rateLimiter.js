@@ -1,7 +1,7 @@
 function rateLimiter() {
     let requestCount = 0;
-    const requestLimit = 1; // Max requests allowed per hour
-    const resetInterval = 3 * 60 * 1000; // Reset counters every minute
+    const requestLimit = 3; // Max requests allowed per hour
+    const resetInterval = 1 * 60 * 1000; // Reset counters every minute
 
     // Function to reset usage counters
     const resetCounter = () => {
