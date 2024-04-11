@@ -41,7 +41,7 @@ router.post('/', async function (req, res) {
                 model: "gpt-3.5-turbo-instruct",
                 prompt: userPrompt,
                 temperature: 0,
-                max_tokens: 100,
+                max_tokens: 200,
                 top_p: 1,
                 frequency_penalty: 0,
                 presence_penalty: 0,
