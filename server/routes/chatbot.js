@@ -1,27 +1,13 @@
 var express = require('express');
+const { writeIndex, fetchByPhrase } = require('../adapters/elasticsearch');
+const { openAIcomplete } = require('../adapters/openAI');
 var router = express.Router();
-var OpenAI = require('openai');
-const { Client } = require('@elastic/elasticsearch');
-
-const client = new Client({
-    node: process.env.GCP_ELASTICSEARCH_ENDPOINT,
-    cloud: {
-        id: process.env.GCP_ELASTIC_CLOUD_ID,
-    },
-    auth: {
-        apiKey: process.env.GCP_ELASTIC_CLOUD_AUTH_KEY
-    }
-});
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
 
 router.post('/', async function (req, res) {
     const { prompt: userPrompt } = req.body;
     try {
         // first check the Elastic db
-        const result = await client.search({
+        const result = await fetchByPhrase({
             index: 'dexter',
             query: {
                 "match_phrase": {
@@ -31,29 +17,18 @@ router.post('/', async function (req, res) {
         })
 
         if (result?.hits?.hits?.length > 0) {
-            console.log('result hits', result.hits.hits) // first maatching answer
+            console.log('result hits from Elastics DB', result.hits.hits) // first maatching answer
             res.status(200).send(result.hits.hits[0]?._source?.answer)
         } else {
             // make the openai call 
-            // const obj = promptBank.find(item => item.prompt.includes(userPrompt)) // lets say this will be done by openai
-
-            const completion = await openai.completions.create({
-                model: "gpt-3.5-turbo-instruct",
-                prompt: userPrompt,
-                temperature: 0,
-                max_tokens: 200,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
-            });
-            console.log('completion.choices[0]', completion.choices[0])
+            const completionText = await openAIcomplete({ prompt: userPrompt });
             const openAIresponseObj = {
                 prompt: userPrompt,
-                answer: completion.choices[0].text
+                answer: completionText
             }
 
             // write to the elastic db
-            await client.index({
+            await writeIndex({
                 index: 'dexter',
                 refresh: true,
                 document: {
